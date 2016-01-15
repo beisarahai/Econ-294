@@ -1,0 +1,86 @@
+# Econ-294
+
+
+print("Bei") #First name#
+print("Hai") #Last name#
+print("1505072") #Student ID#
+
+##1
+#a
+library(foreign)
+df.dta <-read.dta(file="https://github.com/EconomiCurtis/econ294_2015/raw/master/data/NHIS_2007_dta.dta")
+#b
+df.csv <- read.csv (file="https://github.com/EconomiCurtis/econ294_2015/raw/master/data/NHIS_2007_CSV.csv")
+#c
+df.td <- read.table
+(file = "https://github.com/EconomiCurtis/econ294_2015/raw/master/data/NHIS_2007_TSV.txt")
+load(url("https://github.com/EconomiCurtis/econ294_2015/raw/master/data/NHIS_2007_RData.RData"))
+
+##3
+load("/Users/haisara/Downloads/NHIS_2007_RData.RData")
+rdata <- NHIS_2007_RData 
+print(typeof(rdata))
+print(class(rdata))
+print("the type is list and the class is sata.frame")
+print(length(rdata))
+print(dim(rdata))
+print(nrow(rdata))
+print(ncol(rdata))
+summary(rdata)
+print("the length is 9, the dim is 4785, ncol is 9"")
+
+##4
+library(foreign) 
+df.dta <- read.dta(file = "Users/haisara/Downloads/org_example.dta")
+df<-df.dta
+str(df)
+print("the min of rw is 1.8, the mean is 19.8, the median is 15.9 and the max is 354.8")
+
+##5
+c(1, 2, 3, 4, 5, 6, 7, 4, NULL, NA)
+vector<-c(1, 2, 3, 4, 5, 6, 7, 4, NULL, NA)
+print(length(vector))
+print("the length is 9")
+as.numeric(vector)
+mean(as.numeric(vector),na.rm=TRUE)
+print("the mean ignoring NA is 4") 
+
+##6
+Ma<-matrix(1:9, ncol=3, nrow=3, byrow=TRUE)
+print(Ma)
+#transpose
+print(eigen(M))
+print("we got eigenvalues and eigenvectors")
+
+#matrix-Y
+Y<-matrix(c(1,2,3,3,2,1,2,3,0), ncol=3, nrow=3, byrow=TRUE)
+print(Y)
+Yinverse<-solve(Y)
+I<-Yinverse %*% Y
+print（I）
+
+##7
+#a
+diamonds<-data.frame(carat=c(5,2,0.5,1.5,5,"NA",3),cut=c("fair","good","very good","good","fair","Ideal","fair"),
+clarity=c("SI1","I1","VI1","VS1","IF","VVS2","NA"),
+              price=c(850,450,450,NA,750,980,420))
+print(diamonds)
+mean(diamonds$price,na.rm = T)
+print("the mean is 650")
+
+#b
+diamonds2<-subset(diamonds,(cut=="fair"))
+print(diamonds2)
+mean(diamonds2$price)
+print("the mean is 673.3333")
+
+#c
+diamonds3<-subset(diamonds,(cut!="fair"))
+print(diamonds3)
+mean(diamonds3$price,na.rm=T)
+print("the mean is 626.6667")
+
+#d
+diamonds4<-subset(diamonds,(carat>2 & cut=="Ideal"& cut=="very good"))
+print(diamonds4)
+print("can not find a median price")
