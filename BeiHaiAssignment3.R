@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 8f8f3a6db939bfb6bcea663162622b3a838695f8
-#Bei Hai Assignment 3
+##Assignment 3
 #0
 print(paste("Bei Hai","1505072","bhai@ucsc.edu", sep=","))
 
@@ -27,7 +23,6 @@ df.ex.2 <- df.ex %>%
     year == 2013 & (month == 7 | month ==8 | month ==9)
   )
 print(nrow(df.ex.2))
-<<<<<<< HEAD
 #39657 observations
 
 #3
@@ -94,11 +89,4 @@ df.ex.7a<-df.ex %>%
   group_by(year,month,state)%>%
   ungroup()%>%
   arrange (year, month,as.character(state))
-=======
-=======
-# Bai Hai Assignment 3
 
-
-
->>>>>>> 395d0fe5b6625c6849f52fc915f9948e5dde9084
->>>>>>> 8f8f3a6db939bfb6bcea663162622b3a838695f8
