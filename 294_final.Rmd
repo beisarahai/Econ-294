@@ -1,0 +1,117 @@
+---
+title: "294_final"
+author: "Bei"
+output: html_document
+---
+```{r, echo=FALSE, warning=FALSE,message=FALSE}
+library(nycflights13)
+library(dplyr)
+library(ggplot2)
+library(knitr)
+flights_sqlite <- tbl(nycflights13_sqlite(), "flights")
+flights_sqlite
+```
+##a) weather
+```{r,echo=FALSE, warning=FALSE,message=FALSE}
+flightw1<- flights_sqlite %>% filter(dep_delay >120) %>% left_join(weather, by = "origin", copy = TRUE) %>% mutate(canceled = is.na(arr_time))
+flightw2 <- flightw1 %>% group_by(canceled) %>% summarise(mean_delay = mean(dep_delay)) %>% collect()
+flightw2 <- as.data.frame(flightw2)
+flightw2
+ggplot(flightw2, aes(x= factor(canceled),y=mean_delay)) + geom_bar(fill="red", stat = "identity", width = 0.2)
+```
+After filtering departure time more than 2 hours, we can see from the chart that the two cancelation groups are same as the mean value.
+
+##b) time
+```{r,echo=FALSE, warning=FALSE,message=FALSE}
+
+flights1<- as.data.frame(flights_sqlite %>%
+  group_by(month) %>%
+  summarise(avg_dep_delay = mean(dep_delay))
+)
+
+ggplot(flights1, aes(factor(month),avg_dep_delay)) +
+  geom_bar(stat="identity", fill = "blue")
+
+flights2 <- as.data.frame(flights_sqlite %>%
+  group_by(day) %>% 
+  summarise(avg_dep_delay = mean(dep_delay))
+)
+
+ggplot(flights2, aes(day, avg_dep_delay)) + 
+  geom_line()
+
+
+
+flights3 <- as.data.frame(flights_sqlite %>%
+  group_by(hour) %>% 
+  summarise(avg_dep_delay = mean(dep_delay))
+)
+
+ggplot(flights3, aes(hour, avg_dep_delay, na.rm=T)) + 
+  geom_bar(stat="identity", fill = "indianred")
+```
+From the flights1, we know that months 6 and 7 have the most delay hours. The line of delay has fluctuated alot, and day 8 has the longest delay. Flights in 13pm and 23 pm always delay longer.
+
+##c) airport destination
+```{r, echo=FALSE, warning=FALSE,message=FALSE}
+flights4<- group_by(flights_sqlite, dest) %>%
+  mutate(canceled = is.na(arr_time)) %>% 
+  summarise(avg_dep_delay = mean(dep_delay), 
+            count = n(), 
+            sum_can = sum(canceled)
+            )
+
+flights4 <- as.data.frame(flights4)
+flights4$c <- flights4$sum_can/flights4$count
+ggplot(flights4, aes(dest,avg_dep_delay)) +
+  geom_bar(stat="identity", fill = "red") +
+  theme(axis.text.x=element_text(angle = 90))
+ggplot(flights4, aes(dest,c)) + 
+  geom_bar(stat="identity", fill = "red") +
+  theme(axis.text.x=element_text(angle = 90))
+
+```
+From the bar chart, we know that flights to LEX and PSP usually arrive early. Flights to LEX are also more likely to cancel flights than flights to other destinations.
+
+##d) characteristics of plane
+```{r, echo=FALSE, warning=FALSE,message=FALSE}
+flights5 <- flights_sqlite %>% 
+  left_join(planes, by = "tailnum", copy = TRUE)
+
+flights5 <- as.data.frame(flights5)
+flights6 <- group_by(flights5, manufacturer) %>%
+  summarise(avg_dep_delay = mean(dep_delay))
+
+ggplot(flights6, aes(manufacturer, avg_dep_delay)) +
+  geom_bar(stat="identity", fill = "blue") +
+  theme(axis.text.x=element_text(angle = 90))
+
+flights7<- group_by(flights5, model) %>%
+  summarise(avg_dep_delay = mean(dep_delay))
+
+ggplot(flights7, aes(model, avg_dep_delay)) +
+  geom_bar(stat="identity", fill = "blue") +
+  theme(axis.text.x=element_text(angle = 90))
+
+flights_seats <- group_by(flights5, seats) %>%
+  summarise(avg_dep_delay = mean(dep_delay))
+
+ggplot(flights_seats, aes(seats, avg_dep_delay)) +
+  geom_bar(stat="identity", fill = "blue") +
+  theme(axis.text.x=element_text(angle = 90))
+```
+From the graph, we can see that AVIONS MARCEL DASSAULT and JOHN G HESS have shortest delay time and usually have early departure.
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+flights8 <- group_by(flights5, engines) %>% summarise(count = mean(dep_delay))
+flights8 <- as.data.frame(flights8)
+ggplot(flights8, aes(x= engines,y=count)) + geom_bar(stat="identity", fill = "red") + theme(axis.text.x=element_text(angle = 90))
+```
+
+```{r,echo=FALSE, warning=FALSE,message=FALSE}
+flights9 <- group_by(flights5, engine) %>% summarise(count = mean(dep_delay))
+flights9 <- as.data.frame(flights9)
+ggplot(flights9, aes(x= engine,y=count)) + geom_bar(stat="identity", fill = "red") + theme(axis.text.x=element_text(angle = 90))
+```
+4 Cycle is more likely to depart late.
+
+Flights in Months 6 and 7, 13pm and 23 pm to LEX with 4 Cycle are more likely to be cancelled and delayed.
