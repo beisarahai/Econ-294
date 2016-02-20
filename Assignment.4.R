@@ -115,13 +115,13 @@ print(flights.6c$flight)
 cancelled_flights <- flights %>%
   group_by(carrier) %>%
   summarize(
-    min_cancelled = min(cancelled, na.rm=T),
-    q1_cancelled = quantile(cancelled, .25, na.rm=T),
-    mean_cancelled = mean(cancelled, na.rm=T),
-    med_cancelled = median(cancelled, na.rm=T),
-    q3_cancelled = quantile(cancelled, .75, na.rm=T),
-    quan90_cancelled = quantile(cancelled, .90, na.rm=T),
-    max_cancelled = max(cancelled, na.rm=T),
+    min.cancelled = min(cancelled, na.rm=T),
+    q1.cancelled = quantile(cancelled, .25, na.rm=T),
+    mean.cancelled = mean(cancelled, na.rm=T),
+    med.cancelled = median(cancelled, na.rm=T),
+    q3.cancelled = quantile(cancelled, .75, na.rm=T),
+    quan90.cancelled = quantile(cancelled, .90, na.rm=T),
+    max.cancelled = max(cancelled, na.rm=T),
     totalflights = n()
   )
 
@@ -129,25 +129,25 @@ cancelled_flights <- flights %>%
 percent<- flights %>%
   group_by(carrier) %>%
   summarize(
-    min_percent = min(cancelled/n(), na.rm=T),
-    q1_percent = quantile(cancelled/n(), .25, na.rm=T),
-    avg_percent = mean(cancelled/n(), na.rm=T),
-    med_percent = median(cancelled/n(), na.rm=T),
-    q3_percent = quantile(cancelled/n(), .75, na.rm=T),
-    quan90_percent = quantile(cancelled/n(), .90, na.rm=T),
-    max_percent = max(cancelled/n(), na.rm=T)
+    min.percent = min(cancelled/n(), na.rm=T),
+    q1.percent = quantile(cancelled/n(), .25, na.rm=T),
+    avg.percent = mean(cancelled/n(), na.rm=T),
+    med.percent = median(cancelled/n(), na.rm=T),
+    q3.percent = quantile(cancelled/n(), .75, na.rm=T),
+    quan90.percent = quantile(cancelled/n(), .90, na.rm=T),
+    max.percent = max(cancelled/n(), na.rm=T)
   )
 
 delta <- flights %>%
   group_by(carrier) %>%
   summarize(
-    min_delta = min(delta, na.rm=T),
-    q1_delta = quantile(delta, .25, na.rm=T),
-    avg_delta = mean(delta, na.rm=T),
-    med_delta = median(delta, na.rm=T),
-    q3_delta = quantile(delta, .75, na.rm=T),
-    quan90_delta = quantile(delta, .90, na.rm=T),
-    max_delta = max(delta, na.rm=T)
+    min.delta = min(delta, na.rm=T),
+    q1.delta = quantile(delta, .25, na.rm=T),
+    avg.delta = mean(delta, na.rm=T),
+    med.delta = median(delta, na.rm=T),
+    q3.delta = quantile(delta, .75, na.rm=T),
+    quan90.delta = quantile(delta, .90, na.rm=T),
+    max.delta = max(delta, na.rm=T)
   )
 
 
