@@ -151,7 +151,7 @@ delta <- flights %>%
   )
 
 
-join1 <- left_join(cancelled_flights, percent_cancelled, by = "carrier")
+join1 <- left_join(cancelled.flights, percent.cancelled, by = "carrier")
 flights.7a <- left_join(join1, delta, by = "carrier")
 
 # 9
